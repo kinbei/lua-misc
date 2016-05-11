@@ -1,7 +1,9 @@
 # call from .travis/setup_lua.sh
 
 check_retcode() {
-	[[ $1 -ne 0 ]] && exit 1
+	if [ $1 -ne 0 ];then
+	   exit 1;
+	fi
 }
 
 $1 -v
