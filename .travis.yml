@@ -8,6 +8,7 @@ before_install:
   - source .travis/setup_lua.sh
 
 install:
+  - luarocks install Lua-cURL         --server=https://luarocks.org/dev
 
 script:
 
