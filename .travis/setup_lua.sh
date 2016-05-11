@@ -1,8 +1,9 @@
 echo `pwd`
+echo ${HOME}
 
 LUA_HOME_DIR=${HOME}/lua
 mkdir -p ${LUA_HOME_DIR}
-echo 'LUA_HOME_DIR=${LUA_HOME_DIR=}'
+echo 'LUA_HOME_DIR=${LUA_HOME_DIR}'
 
 # lua 5.1
 LUA_5_1_DIR=${LUA_HOME_DIR}/lua51
