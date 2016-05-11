@@ -5,7 +5,7 @@ env:
 
 
 before_install:
-  - source .travis/setenv_lua.sh
+  - source .travis/setup_lua.sh
 
 install:
 
