@@ -5,4 +5,4 @@ check_retcode() {
 }
 
 $1 -v
-find ${TRAVIS_BUILD_DIR} -type f -wholename "${TRAVIS_BUILD_DIR}/*.lua" -not -path "${TRAVIS_BUILD_DIR}/lua/*" -exec $1 {} && check_retcode $? \;
+find ${TRAVIS_BUILD_DIR} -type f -wholename "${TRAVIS_BUILD_DIR}/*.lua" -not -path "${TRAVIS_BUILD_DIR}/lua/*" -exec $1 {} \; ; check_retcode $?
