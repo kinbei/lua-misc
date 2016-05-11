@@ -29,7 +29,7 @@ ${LUA_5_3_DIR}/bin/lua -v
 cd ${LUA_HOME_DIR}
 LUA_JIT_DIR=${LUA_HOME_DIR}/LuaJIT
 git clone https://github.com/LuaJIT/LuaJIT.git
-ls
 cd ${LUA_JIT_DIR}
-sudo make && sudo make install PREFIX=${LUA_5_3_DIR}
+sudo make && sudo make install PREFIX=${LUA_JIT_DIR}
+ls
 ${LUA_JIT_DIR}/bin/lua -v
