@@ -11,7 +11,7 @@ ${LUA_5_1_DIR}/bin/lua -v
 
 # lua 5.2
 cd ${LUA_HOME_DIR}
-LUA_5_2_DIR=${LUA_HOME_DIR}/lua-5.2
+LUA_5_2_DIR=${LUA_HOME_DIR}/lua-5.2.0
 curl --location http://www.lua.org/ftp/lua-5.2.0.tar.gz | tar xz;
 cd ${LUA_5_2_DIR}
 sudo make linux && sudo make local
