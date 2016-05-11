@@ -1,3 +1,9 @@
+if [ $# != 1 ] ; then 
+	echo "usage: $0 shell_file_name" 
+	echo " e.g.: $0 xxx.sh" 
+	exit 1; 
+fi 
+
 LUA_HOME_DIR=${TRAVIS_BUILD_DIR}/lua
 mkdir -p ${LUA_HOME_DIR}
 
@@ -32,5 +38,12 @@ git clone https://github.com/LuaJIT/LuaJIT.git
 cd ${LUA_JIT_DIR}
 sudo make && sudo make install PREFIX=${LUA_JIT_DIR}
 cd ${LUA_JIT_DIR}/bin/
-ll
 ${LUA_JIT_DIR}/bin/luajit -v
+
+echo "Install lua success."
+
+###########################################################################
+sh $1 ${LUA_5_1_DIR}/bin/lua
+sh $1 ${LUA_5_2_DIR}/bin/lua
+sh $1 ${LUA_5_3_DIR}/bin/lua
+sh $1 ${LUA_JIT_DIR}/bin/luajit

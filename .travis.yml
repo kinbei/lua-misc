@@ -5,13 +5,14 @@ env:
 
 
 before_install:
-  - source .travis/setup_lua.sh
+  - # Do nothing.
 
 install:
   - # Do nothing. 
 
 script:
-  - # Do nothing. 
+  - # Do nothing.
+  script .travis/setup_lua.sh check.sh
 
 branches:
   except:
@@ -21,4 +22,3 @@ notifications:
   email:
     on_success: change
     on_failure: alway
-
