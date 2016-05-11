@@ -1,5 +1,4 @@
-echo `pwd`
-echo ${HOME}
+echo ${TRAVIS_BUILD_DIR}
 
 LUA_HOME_DIR=${HOME}/lua
 mkdir -p ${LUA_HOME_DIR}
