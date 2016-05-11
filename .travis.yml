@@ -7,14 +7,6 @@ env:
 before_install:
   - source .travis/setup_lua.sh
 
-install:
-  - luarocks install Lua-cURL         --server=https://luarocks.org/dev
-
-script:
-
-after_success:
-
-
 branches:
   except:
     - gh-pages
