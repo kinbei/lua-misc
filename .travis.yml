@@ -11,7 +11,7 @@ install:
   - # Do nothing. 
 
 script:
-  - .travis/setup_lua.sh check.sh
+  /bin/sh .travis/setup_lua.sh check.sh
 
 branches:
   except:
