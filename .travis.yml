@@ -7,6 +7,12 @@ env:
 before_install:
   - source .travis/setup_lua.sh
 
+install:
+  - # Do nothing. 
+
+script:
+  - # Do nothing. 
+
 branches:
   except:
     - gh-pages
