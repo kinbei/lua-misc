@@ -1,14 +1,13 @@
-function prettyinfo(info) 
-   local function abc()
-       return 123
-   end 
-   return abc
+local function trace_log(fmt, ...)
+        local t = debug.getinfo( 2, "Sl" )
+        print( string.format("%s:%s: " .. fmt, t.source, tostring(t.currentline), ...) )
 end
 
-local function get_func_dbginfo(func)
-	local t = debug.getinfo( prettyinfo(a), "Sl" )
-	return string.format( "%s:%s-%s", t.source, tostring(t.linedefined), tostring(t.lastlinedefined) )
+function test_trace_log() 
+        local function abc()
+                trace_log("test log")
+        end 
+        abc()
 end
 
-
-print( get_func_dbginfo( prettyinfo(nil) ) )
+test_trace_log()
