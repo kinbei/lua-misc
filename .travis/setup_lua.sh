@@ -11,3 +11,4 @@ mkdir -p ${LUA_5_1_DIR}
 cd ./lua51
 curl --location http://www.lua.org/ftp/lua-5.1.tar.gz | tar xz;
 make && make install PREFIX="${LUA_5_1_DIR}"
+
