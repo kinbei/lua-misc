@@ -6,5 +6,5 @@ cd ${LUA_HOME_DIR}
 LUA_5_1_DIR=${LUA_HOME_DIR}/lua-5.1
 curl --location http://www.lua.org/ftp/lua-5.1.tar.gz | tar xz;
 cd ${LUA_5_1_DIR}
-make && make install PREFIX="${LUA_5_1_DIR}"
+make linux && make install PREFIX="${LUA_5_1_DIR}"
 
