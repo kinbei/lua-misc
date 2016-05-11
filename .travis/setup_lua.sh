@@ -8,7 +8,7 @@ echo 'LUA_HOME_DIR=${LUA_HOME_DIR}'
 # lua 5.1
 LUA_5_1_DIR=${LUA_HOME_DIR}/lua51
 mkdir -p ${LUA_5_1_DIR}
-cd ./lua51
+cd ${LUA_5_1_DIR}
 curl --location http://www.lua.org/ftp/lua-5.1.tar.gz | tar xz;
 make && make install PREFIX="${LUA_5_1_DIR}"
 
