@@ -22,4 +22,4 @@ local function test_fib(n)
   print("N= ", n, "Time=", t2-t1, "ms", "Fib=",x)
 end
 
-test_fib(40)
+test_fib(10)
