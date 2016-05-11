@@ -19,8 +19,8 @@ ${LUA_5_2_DIR}/bin/lua -v
 
 # lua 5.3
 cd ${LUA_HOME_DIR}
-LUA_5_3_DIR=${LUA_HOME_DIR}/lua-5.3.0
-curl --location http://www.lua.org/ftp/lua-5.2.0.tar.gz | tar xz;
+LUA_5_3_DIR=${LUA_HOME_DIR}/lua-5.3.2
+curl --location http://www.lua.org/ftp/lua-5.3.2.tar.gz | tar xz;
 cd ${LUA_5_3_DIR}
 sudo make linux && sudo make install INSTALL_TOP=${LUA_5_3_DIR}
 ${LUA_5_3_DIR}/bin/lua -v
