@@ -1,3 +1,3 @@
-# lua-test
+# Lua-Code-Snippets
 
-Code for experiments
+Some useful lua code snippets
