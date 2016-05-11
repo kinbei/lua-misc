@@ -8,16 +8,11 @@ before_install:
   - source .travis/setenv_lua.sh
 
 install:
-  - luarocks install luacheck
-  - luarocks install busted
-  - luarocks install luacov
-  - luarocks install luacov-coveralls
 
 script:
-  - luacheck --no-unused-args --std max+busted *.lua
 
 after_success:
-  - luacov-coveralls --exclude $TRAVIS_BUILD_DIR/lua_install
+
 
 branches:
   except:

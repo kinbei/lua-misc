@@ -1,0 +1,1 @@
+echo ${TRAVIS_BUILD_DIR}
