@@ -2,3 +2,5 @@
 
 $1 -v
 find ./ -wholename "${TRAVIS_BUILD_DIR}/*.lua" | xargs $1
+
+$1 ${TRAVIS_BUILD_DIR}/trace_log.lua
