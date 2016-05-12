@@ -11,4 +11,9 @@ check_retcode() {
 }
 
 $1 -v
-find ${TRAVIS_BUILD_DIR} -type f -wholename "${TRAVIS_BUILD_DIR}/*.lua" -not -path "${TRAVIS_BUILD_DIR}/lua/*" -exec check_retcode $1 {} \;
+# -exec check_retcode $1 {} \;
+
+for lua_file in $( find ${TRAVIS_BUILD_DIR} -type f -wholename "${TRAVIS_BUILD_DIR}/*.lua" -not -path "${TRAVIS_BUILD_DIR}/lua/*" )
+do
+	check_retcode $1 lua_file
+done
