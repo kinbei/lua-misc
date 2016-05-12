@@ -9,7 +9,6 @@ check_retcode() {
 	LUA_FILE=$2
 
 	${LUA_BIN} ${LUA_FILE}
-	$1 $2
 	retcode=$?
 	if [ "${retcode}" -ne "0" ];then
 		echo "Failed execute lua file : ${LUA_FILE}, retcode is ${retcode}"
