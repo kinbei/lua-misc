@@ -1,3 +1,5 @@
+set -o errexit
+
 # call from .travis/setup_lua.sh
 
 LUA_BIN=$1
