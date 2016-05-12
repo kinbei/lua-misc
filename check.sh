@@ -1,20 +1,24 @@
 # call from .travis/setup_lua.sh
 
+LUA_BIN=$1
+
 check_retcode() {
-	# $1 lua bin
-	# $2 lua file name
+	LUA_BIN=$1
+	LUA_FILE=$2
+
+	${LUA_BIN} ${LUA_FILE}
 	$1 $2
 	retcode=$?
-	echo "return code is ${retcode}"
 	if [ "${retcode}" -ne "0" ];then
-	   exit 1;
+		echo "Failed execute lua file : ${LUA_FILE}, retcode is ${retcode}"
+		exit 1;
 	fi
 }
 
-$1 -v
-# -exec check_retcode $1 {} \;
+# show the lua version
+${LUA_BIN} -v
 
-for lua_file in $( find ${TRAVIS_BUILD_DIR} -type f -wholename "${TRAVIS_BUILD_DIR}/*.lua" -not -path "${TRAVIS_BUILD_DIR}/lua/*" )
+for LUA_FILE in $( find ${TRAVIS_BUILD_DIR} -type f -wholename "${TRAVIS_BUILD_DIR}/*.lua" -not -path "${TRAVIS_BUILD_DIR}/lua/*" )
 do
-	check_retcode $1 ${lua_file}
+	check_retcode ${LUA_BIN} ${LUA_FILE}
 done
