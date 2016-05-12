@@ -77,11 +77,10 @@ end
 ----------------------------------------------------------------------
 ---- Example usage:
 function show(t)
-  print (t.__name .. ":")
-  for k, v in ordered(t) do print(k, v) end
+  for k, v in pairs(t) do print(k, v) end
 end
 
-tab = orderedTable {__name = "table 1"}
+tab = Ordered()
 tab.firstName = "Rici"
 tab.lastName = "Lake"
 tab.maternalLastName = "Papert"
