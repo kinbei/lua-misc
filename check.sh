@@ -4,8 +4,9 @@ check_retcode() {
 	# $1 lua bin
 	# $2 lua file name
 	$1 $2
-	echo "return code is $?"
-	if [ "$?" -ne "0" ];then
+	retcode = $?
+	echo "return code is ${retcode}"
+	if [ "${retcode}" -ne "0" ];then
 	   exit 1;
 	fi
 }
