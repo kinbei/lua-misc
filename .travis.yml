@@ -6,11 +6,11 @@ env:
 
 before_install:
   - # Do nothing.
-  - sudo luarocks install luacov-coveralls
 
 install:
   - # Do nothing. 
   - luarocks install https://luarocks.org/manifests/olivine-labs/busted-2.0.rc11-0.rockspec
+  - sudo luarocks install luacov-coveralls
 
 script:
   /bin/sh .travis/check_lua.sh ${TRAVIS_BUILD_DIR}/check.sh
