@@ -19,7 +19,7 @@ ${LUA_5_3_DIR}/bin/lua -v
 LUAROCKS_DIR=${WORKSPACE_DIR}/luarocks-2.3.0
 wget http://luarocks.org/releases/luarocks-2.3.0.tar.gz
 tar zxpf luarocks-2.3.0.tar.gz
-cd LUAROCKS_DIR
+cd ${LUAROCKS_DIR}
 ./configure --with-lua=${LUA_5_3_DIR}; sudo make bootstrap
 
 SHELL_FILE=$1
