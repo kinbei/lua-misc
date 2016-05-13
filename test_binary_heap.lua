@@ -137,7 +137,30 @@ local function test_sort_queue_speed(runs, insert_count, pop_count, range)
 end
 
 
--- test_heap_write(binary_heap:new(function(k1, k2) return k1 > k2 end))
--- test_heap_integrity(binary_heap:new())
--- test_heap_speed(binary_heap:new(), "binary heap")
--- test_sort_queue_speed()
+--test_heap_write(binary_heap:new(function(k1, k2) return k1 > k2 end))
+--test_heap_integrity(binary_heap:new())
+--test_heap_speed(binary_heap:new(), "binary heap")
+--test_sort_queue_speed()
+
+local h = binary_heap:new()
+local begin_t = os.clock()
+local end_t = os.clock()
+
+h:insert(1, { test = "test" } )
+h:insert(1, { test = "test" } )
+h:insert(3, { test = "test" } )
+h:insert(1, { test = "test" } )
+h:insert(2, { test = "test" } )
+h:insert(5, { test = "test" } )
+
+end_t = os.clock()
+print( string.format("insert use %s", end_t - begin_t  ) )
+
+begin_t = os.clock()
+while not h:empty() do
+	local n, t = h:pop()
+	print(n, t.test)
+end
+end_t = os.clock()
+print( string.format("pop use %s", end_t - begin_t  ) )
+

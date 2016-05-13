@@ -117,6 +117,10 @@ function heap:pop()
   return result.key, result.value
 end
 
+function heap:get_top()
+	local result = self[1]
+	return result.key, result.value
+end
 
 -- checking ------------------------------------------------------------------
 
