@@ -15,6 +15,8 @@ script:
 
 after_success:
   - luacov-coveralls
+  - coveralls --dump c.report.json
+  - luacov-coveralls -j c.report.json
 
 branches:
   except:
