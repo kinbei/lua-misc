@@ -19,7 +19,7 @@ check_retcode() {
 # show the lua version
 ${LUA_BIN} -v
 
-for LUA_FILE in $( find ${TRAVIS_BUILD_DIR} -type f -wholename "${TRAVIS_BUILD_DIR}/*.lua" -not -path "${TRAVIS_BUILD_DIR}/lua/*" )
+for LUA_FILE in $( find ${TRAVIS_BUILD_DIR} -type f -wholename "${TRAVIS_BUILD_DIR}/*.lua" -not -path "${TRAVIS_BUILD_DIR}/lua/*" -not -path "${TRAVIS_BUILD_DIR}/coverage/*" )
 do
 	check_retcode ${LUA_BIN} ${LUA_FILE}
 done
