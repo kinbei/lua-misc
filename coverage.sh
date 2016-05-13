@@ -23,3 +23,6 @@ for LUA_FILE in $( find ${TRAVIS_BUILD_DIR} -type f -wholename "${TRAVIS_BUILD_D
 do
 	check_retcode ${LUA_BIN} ${LUA_FILE}
 done
+
+cd ${TRAVIS_BUILD_DIR}
+ls
