@@ -3,13 +3,12 @@ sudo: true
 
 env:
 
-
 before_install:
   - # Do nothing.
+  .source .travis/install_luarocks.sh
 
 install:
   - # Do nothing. 
-  - luarocks install https://luarocks.org/manifests/olivine-labs/busted-2.0.rc11-0.rockspec
   - sudo luarocks install luacov-coveralls
 
 script:
