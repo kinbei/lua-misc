@@ -16,10 +16,10 @@ cd ${LUA_5_3_DIR}
 sudo make linux && sudo make install INSTALL_TOP=${LUA_5_3_DIR}
 ${LUA_5_3_DIR}/bin/lua -v
 
+cd ${WORKSPACE_DIR}
 LUAROCKS_DIR=${WORKSPACE_DIR}/luarocks-2.3.0
 curl --location http://luarocks.org/releases/luarocks-2.3.0.tar.gz | tar xz;
 
-cd ${WORKSPACE_DIR}
 ls
 
 cd ${LUAROCKS_DIR}
