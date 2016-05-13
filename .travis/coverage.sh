@@ -20,7 +20,7 @@ LUAROCKS_DIR=${WORKSPACE_DIR}/luarocks-2.3.0
 curl --location http://luarocks.org/releases/luarocks-2.3.0.tar.gz | tar xz;
 
 cd ${WORKSPACE_DIR}
-ll
+ls
 
 cd ${LUAROCKS_DIR}
 ./configure --with-lua=${LUA_5_3_DIR}; sudo make bootstrap
