@@ -24,5 +24,6 @@ cd ${LUAROCKS_DIR}
 
 sudo luarocks install luacov-coveralls
 
+cd ${TRAVIS_BUILD_DIR}
 SHELL_FILE=$1
 sh ${SHELL_FILE} ${LUA_5_3_DIR}/bin/lua
