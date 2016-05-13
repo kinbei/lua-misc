@@ -13,4 +13,4 @@ ${LUA_5_3_DIR}/bin/lua -v
 wget http://luarocks.org/releases/luarocks-2.3.0.tar.gz
 tar zxpf luarocks-2.3.0.tar.gz
 cd luarocks-2.3.0
-./configure --with-lua-bin=${LUA_5_3_DIR}/bin/lua; sudo make bootstrap
+./configure --with-lua=${LUA_5_3_DIR}; sudo make bootstrap
