@@ -5,7 +5,7 @@ env:
 
 before_install:
   - # Do nothing.
-  - .source .travis/install_luarocks.sh
+  - source .travis/install_luarocks.sh
 
 install:
   - # Do nothing. 
