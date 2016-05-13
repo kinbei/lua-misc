@@ -19,13 +19,10 @@ ${LUA_5_3_DIR}/bin/lua -v
 cd ${WORKSPACE_DIR}
 LUAROCKS_DIR=${WORKSPACE_DIR}/luarocks-2.3.0
 curl --location http://luarocks.org/releases/luarocks-2.3.0.tar.gz | tar xz;
-
-ls
-
 cd ${LUAROCKS_DIR}
 ./configure --with-lua=${LUA_5_3_DIR}; sudo make bootstrap
 
+sudo luarocks install luacov-coveralls
+
 SHELL_FILE=$1
 sh ${SHELL_FILE} ${LUA_5_3_DIR}/bin/lua
-
-sudo luarocks install luacov-coveralls
