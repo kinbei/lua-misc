@@ -12,8 +12,7 @@ install:
   - sudo luarocks install luacov-coveralls
 
 script:
-  - cd ${TRAVIS_BUILD_DIR}
-  /bin/sh .travis/check_lua.sh ${TRAVIS_BUILD_DIR}/check.sh
+  /bin/sh ${TRAVIS_BUILD_DIR}/.travis/check_lua.sh ${TRAVIS_BUILD_DIR}/check.sh
 
 after_success:
   - luacov-coveralls
