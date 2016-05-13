@@ -1,6 +1,6 @@
 set -o errexit
 
-# call from .travis/check_lua.sh
+# call from .travis/coverage.sh
 
 LUA_BIN=$1
 
@@ -8,7 +8,7 @@ check_retcode() {
 	LUA_BIN=$1
 	LUA_FILE=$2
 
-	${LUA_BIN} ${LUA_FILE}
+	${LUA_BIN} -lluacov ${LUA_FILE}
 	retcode=$?
 	if [ "${retcode}" -ne "0" ];then
 		echo "Failed execute lua file : ${LUA_FILE}, retcode is ${retcode}"
