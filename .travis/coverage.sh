@@ -24,3 +24,5 @@ cd LUAROCKS_DIR
 
 SHELL_FILE=$1
 sh ${SHELL_FILE} ${LUA_5_3_DIR}/bin/lua
+
+sudo luarocks install luacov-coveralls

@@ -5,11 +5,9 @@ env:
 
 before_install:
   - # Do nothing.
-  - source .travis/install_luarocks.sh
 
 install:
   - # Do nothing. 
-  - sudo luarocks install luacov-coveralls
 
 script:
   /bin/sh ${TRAVIS_BUILD_DIR}/.travis/check_lua.sh ${TRAVIS_BUILD_DIR}/check.sh
