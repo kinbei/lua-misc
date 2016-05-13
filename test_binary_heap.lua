@@ -140,4 +140,4 @@ end
 test_heap_write(binary_heap:new(function(k1, k2) return k1 > k2 end))
 test_heap_integrity(binary_heap:new())
 test_heap_speed(binary_heap:new(), "binary heap")
-test_sort_queue_speed()
+-- test_sort_queue_speed()
