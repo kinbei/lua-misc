@@ -1,6 +1,11 @@
 local function trace_log(fmt, ...)
-        local t = debug.getinfo( 2, "nSl" )
-        print( string.format("%s:%s - %s: " .. fmt, t.source, tostring(t.currentline), tostring(t.name), ...) )
+	local t = debug.getinfo( 2, "nSl" )
+	local result = string.format("%s:%s", t.source, tostring(t.currentline))
+	if t.name then
+		result = result .. string.format(" - %s", tostring(t.name))
+	end
+	result = result .. string.format(": " .. fmt, ...)
+	print( result )
 end
 
 function test_trace_log()
