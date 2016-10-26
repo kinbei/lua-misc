@@ -29,22 +29,33 @@ local function CountedTable(x)
     end
 
     mt.__len = function(t)
+        print("run here")
         return all
     end
 
+    new_t.getcount = function()
+        return all
+    end
     return setmetatable(new_t, mt)
 end
 
 local bar = CountedTable { x = 23, y = 43, z = 334, [true] = true }
 
-assert(#bar == 4)
-print(bar.x)
+local function checkcount(count)
+        if _VERSION == 'Lua 5.1' then
+                assert(bar.getcount() == count)
+        elseif _VERSION == 'Lua 5.3' then
+                assert(#bar == count)
+        end
+end
+
+checkcount(4)
 assert(bar.x == 23)
 bar.x = nil
-assert(#bar == 3)
+checkcount(3)
 bar.x = nil
-assert(#bar == 3)
+checkcount(3)
 bar.x = 24
 bar.x = 25
 assert(bar.x == 25)
-assert(#bar == 4)
+checkcount(4)
