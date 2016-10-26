@@ -29,7 +29,6 @@ local function CountedTable(x)
     end
 
     mt.__len = function(t)
-        print("run here")
         return all
     end
 
