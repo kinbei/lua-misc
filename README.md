@@ -1,4 +1,4 @@
-# lua-code-snippets
+# lua-misc
 
 Some useful lua code snippets
 
