@@ -2,7 +2,7 @@
 -- 	[xx] = { id = xx, weight = xx },
 -- 	...
 -- }
-local function weight_random( tbl_weight, random_func, id, weight )
+local function weighted_random( tbl_weight, random_func, id, weight )
 	random_func = random_func or math.random
 	id = id or "id"
 	weight = weight or "weight"
@@ -42,7 +42,7 @@ t[3] = { weight = 30, id = 3 }
 t[4] = { weight = 40, id = 4 }
 t[5] = { weight = 50, id = 5 }
 
-local f = weight_random(t)
+local f = weighted_random(t)
 
 local result = {}
 for i = 1, 1500 do
