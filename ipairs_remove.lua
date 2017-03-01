@@ -15,7 +15,7 @@ end
 
 local t = { "a", "b", "c", "d", "e" }
 
-for i, t, remove in ipairs_remove(t) do
+for i, v, remove in ipairs_remove(t) do
    print(i, v)
    if v == "c" then remove() end
 end
