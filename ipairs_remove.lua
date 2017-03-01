@@ -6,7 +6,7 @@ function ipairs_remove(tbl)
    end
    return function()
       i = i + 1
-      if tbl[i] then
+      if tbl[i] ~= nil then
          return i, tbl[i], remove
       end
       return nil
