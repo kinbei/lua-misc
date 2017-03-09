@@ -5,7 +5,7 @@
 -- @function table.pack
 if not table.pack then
     function table.pack (...)
-        return {n=select('#',...); ...}
+        return {n=select('#',...), ...}
     end
 end
 
