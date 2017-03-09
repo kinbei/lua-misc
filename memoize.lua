@@ -1,15 +1,21 @@
-function pack( ... )
-    return table.pack( ... )
+if not table.pack then
+    function table.pack (...)
+        return {n=select('#',...), ...}
+    end
+end
+
+if not table.unpack then
+    table.unpack = unpack 
 end
 
 function memoize( fn )
     local function fnKey( ... )
         local key = ""
-        local args = pack( ... )
+        local args = table.pack( ... )
         for i = 1, args.n do
             key = key .. "[" .. tostring( args[ i ] ) .. "]"
         end
-        return key 
+        return key
     end
 
     local object = {
@@ -18,12 +24,12 @@ function memoize( fn )
             local values = targetTable.__memoized[ key ]
 
             if ( values == nil ) then
-                values = pack( fn( ... ) )
+                values = table.pack( fn( ... ) )
                 targetTable.__memoized[ key ] = values
             end
 
-            if ( table.getn( values ) > 0 ) then
-                return unpack( values )
+            if ( values.n > 0 ) then
+                return table.unpack( values )
             end
 
             return nil
@@ -35,3 +41,12 @@ function memoize( fn )
 
     return setmetatable( object, object )
 end
+
+local function fn1(...)
+        return ...
+end
+
+local m1 = memoize( fn1 )
+local t = m1( 1, 2, 3 )
+
+print( m1(1, 2, 3) )
