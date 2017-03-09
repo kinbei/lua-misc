@@ -1,12 +1,13 @@
 function pack( ... )
-    return arg
+    return table.pack( ... )
 end
 
 function memoize( fn )
     local function fnKey( ... )
         local key = ""
-        for i = 1, table.getn( arg ) do
-            key = key .. "[" .. tostring( arg[ i ] ) .. "]"
+        local args = pack( ... )
+        for i = 1, args.n do
+            key = key .. "[" .. tostring( args[ i ] ) .. "]"
         end
         return key 
     end
