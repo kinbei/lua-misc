@@ -32,9 +32,18 @@ local function CountedTable(x)
         return all
     end
 
+    mt.__pairs = function(t)
+        return next, x
+    end
+
     new_t.getcount = function()
         return all
     end
+
+    new_t.pairs = function()
+        return pairs(x)
+    end
+
     return setmetatable(new_t, mt)
 end
 
@@ -58,3 +67,14 @@ bar.x = 24
 bar.x = 25
 assert(bar.x == 25)
 checkcount(4)
+
+if _VERSION == 'Lua 5.3' then
+    for k, v in pairs(bar) do
+        print(k, v)
+    end
+
+elseif _VERSION == 'Lua 5.1' then
+    for k, v in bar.pairs() do
+        print(k, v)
+    end
+end
