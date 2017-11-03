@@ -10,5 +10,5 @@ end
 function get_natural_days(time_stamp_1, time_stamp_2)
 	local t1 = func.get_day_beginning_timestamp(time_stamp_1)
 	local t2 = func.get_day_beginning_timestamp(time_stamp_2)
-	return math.abs(t1 - t2)
+	return math.floor( math.abs( t1 - t2 ) / (3600 * 24) )
 end
