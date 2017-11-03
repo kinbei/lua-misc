@@ -1,6 +1,14 @@
+function get_day_beginning_timestamp(time_stamp, i)
+	local t = os.date("*t", time_stamp)
+	t.hour = 0
+	t.min = 0
+	t.sec = 0
+	return os.time(t)
+end
+
 -- 给出两个时间戳, 返回它们相差的天数(按自然天计算)
-local function get_natural_days( time_stamp_1, time_stamp_2 )
-        local t1 = math.floor( time_stamp_1 / ( 3600 * 24 ) )
-        local t2 = math.floor( time_stamp_2 / ( 3600 * 24 ) )
-        return math.abs( t1 - t2 )
+function get_natural_days(time_stamp_1, time_stamp_2)
+	local t1 = func.get_day_beginning_timestamp(time_stamp_1)
+	local t2 = func.get_day_beginning_timestamp(time_stamp_2)
+	return math.abs(t1 - t2)
 end
