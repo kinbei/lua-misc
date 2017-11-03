@@ -1,5 +1,5 @@
 -- 计算游戏升级所需能量, 保留小数点后两位
-
+--[[
 local t = table.pack(...)
 
 local current_power = tonumber(t[1]) or 1000
@@ -17,3 +17,4 @@ for i = 1, remain do
 end
 
 print(string.format("result : total_power = %s", total_power))
+--]]
