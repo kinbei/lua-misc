@@ -26,12 +26,17 @@ end
 local function insert(self, key, value)
 	self._t[key] = value
 
-	if type(value) == "table" then
-		for field_name, field_value in pairs(value) do
-			self._tbl_cache[field_name] = self._tbl_cache[field_name] or {}
-			self._tbl_cache[field_name][field_value] = self._tbl_cache[field_name][field_value] or {}
-			self._tbl_cache[field_name][field_value][key] = true
-		end
+	if type(value) ~= "table" then
+		return
+	end
+	
+	local index_field_value
+	for index_field_name, _ in pairs(self._tbl_index_field_name) do
+		index_field_value = value[index_field_name]		
+
+		self._tbl_cache[index_field_name] = self._tbl_cache[index_field_name] or {}
+		self._tbl_cache[index_field_name][index_field_value] = self._tbl_cache[index_field_name][index_field_value] or {}
+		self._tbl_cache[index_field_name][index_field_value][key] = true
 	end
 end
 
@@ -39,14 +44,19 @@ local function delete(self, key)
 	self._t[key] = nil
 end
 
-local function create()
+local function create(tbl_field_name)
 	local t = {}
 	t._t = {} -- {[key] = value, ... }
+	t._tbl_index_field_name = {} -- = { [field_name] = true, ... }
 	t._tbl_cache = {} -- = { [field_name] = { [field_value] = { [key] = true }, ... }, ...  }
 
 	t.query = query
 	t.insert = insert
 	t.delete = delete
+
+	for _, v in ipairs(tbl_field_name) do
+		t._tbl_index_field_name[v] = true
+	end
 
 	return t
 end
