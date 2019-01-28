@@ -6,7 +6,7 @@ local function table_length(t)
 	return length
 end
 
-local create = require("multi_index_table_2")
+local create = require("multi_index_table")
 local multi_key_table = create()
 
 local activity1 = {}
