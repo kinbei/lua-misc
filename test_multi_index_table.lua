@@ -1,13 +1,13 @@
-local create = require "multi_index_table"
-local multi_key_table = create()
-
 local function table_length(t)
-	local count = 0
-	for _, _ in pairs(t) do
-		count = count + 1
+	local length = 0
+	for k, v in pairs(t) do
+		length = length + 1
 	end
-	return count
+	return length
 end
+
+local create = require("multi_index_table_2")
+local multi_key_table = create()
 
 local activity1 = {}
 activity1.activity_id = 100
@@ -21,18 +21,15 @@ local activity3 = {}
 activity3.activity_id = 300
 activity3.activity_type = 2
 
-
-multi_key_table:make_key_index( "activity_id" )
-multi_key_table:make_index( "activity_type" )
-
-multi_key_table:insert( activity1 )
-multi_key_table:insert( activity2 )
-multi_key_table:insert( activity3 )
+multi_key_table:insert( activity1.activity_id, activity1 )
+multi_key_table:insert( activity2.activity_id, activity2 )
+multi_key_table:insert( activity3.activity_id, activity3 )
 
 -- query key
 local r = multi_key_table:query( "activity_id", 100 )
-assert( r.activity_id == 100 )
-assert( r.activity_type == 1 )
+assert( table_length(r) == 1 )
+assert( r[100].activity_id == 100 )
+assert( r[100].activity_type == 1 )
 
 -- query index "activity_type"
 local r = multi_key_table:query( "activity_type", 1 )
@@ -50,3 +47,6 @@ assert( table_length(r) == 1 )
 assert( r[300] )
 assert( r[300].activity_type == 2 )
 assert( r[300].activity_id == 300 )
+
+local r = multi_key_table:query( "activity_type", 3 )
+assert( table_length(r) == 0 )
