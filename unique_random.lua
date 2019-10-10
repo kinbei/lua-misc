@@ -2,7 +2,7 @@
 --@ 在 [min, max] 的范围内生成 count 个不重复的随机数
 --@ return = {x, x, x, ...}
 --]]
-function get_unique_random( min, max, count )
+function unique_random( min, max, count )
   -- assert( min > 0 )
   -- assert( max > 0 )
   -- assert( max >= min, string.format("%d %d", min, max) )
