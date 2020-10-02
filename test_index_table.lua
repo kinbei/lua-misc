@@ -1,3 +1,13 @@
+if not table.pack then
+	function table.pack (...)
+		return {n = select('#',...), ...}
+	end
+end
+
+if not table.unpack then
+	table.unpack = unpack 
+end
+
 local function table_length(t)
 	local length = 0
 	for k, v in pairs(t) do
