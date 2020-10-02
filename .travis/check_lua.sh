@@ -40,6 +40,7 @@ git clone https://github.com/LuaJIT/LuaJIT.git
 cd ${LUA_JIT_DIR}
 sudo make && sudo make install PREFIX=${LUA_JIT_DIR}
 cd ${LUA_JIT_DIR}/bin/
+sudo ln -sf luajit-2.1.0-beta3 /home/travis/build/kinbei/lua-misc/lua/LuaJIT/bin/luajit
 ${LUA_JIT_DIR}/bin/luajit -v
 
 echo "===================================================================================================="
