@@ -25,5 +25,5 @@ jobs:
 
       - name: Run script
         run: |
-          sh ./check.sh
-          echo test, and deploy your project.
+          sh ${GITHUB_WORKSPACE}/check.sh
+        
