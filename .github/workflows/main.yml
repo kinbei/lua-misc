@@ -25,5 +25,5 @@ jobs:
 
       - name: Run script
         run: |
-          sh ${GITHUB_WORKSPACE}/check.sh
+          sh ${GITHUB_WORKSPACE}/check.sh lua
         
