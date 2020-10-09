@@ -1,10 +1,9 @@
 set -o errexit
 
-# call from .travis/check_lua.sh
-
 LUA_BIN=$1
+WORKSPACE=$2
 
-check_retcode() {
+chk_ret() {
 	LUA_BIN=$1
 	LUA_FILE=$2
 
@@ -12,14 +11,14 @@ check_retcode() {
 	retcode=$?
 	if [ "${retcode}" -ne "0" ];then
 		echo "Failed execute lua file : ${LUA_FILE}, retcode is ${retcode}"
-		exit 1;
+		exit 1
 	fi
 }
 
 # show the lua version
 ${LUA_BIN} -v
 
-for LUA_FILE in $( find ${TRAVIS_BUILD_DIR} -type f -wholename "${TRAVIS_BUILD_DIR}/*.lua" -not -path "${TRAVIS_BUILD_DIR}/lua/*" )
+for LUA_FILE in $( find ${WORKSPACE} -type f -wholename "${WORKSPACE}/*.lua" -not -path "${WORKSPACE}/lua/*" )
 do
-	check_retcode ${LUA_BIN} ${LUA_FILE}
+	chk_ret ${LUA_BIN} ${LUA_FILE}
 done
