@@ -25,7 +25,15 @@ jobs:
     - name: Setup Lua
       uses: leafo/gh-actions-lua@v6
       with:
-        lua-version: ${{ matrix.luaVersion }}
+        luaVersion: ${{ matrix.luaVersion }}
+
+    - name: install luarocks
+      uses: leafo/gh-actions-luarocks@v2
+      
+    - name: install luacov
+      run: |
+        luarocks install luacov
+      if: success()
       
     - name: Run UnitTest
       run: |
