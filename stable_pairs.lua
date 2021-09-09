@@ -10,7 +10,16 @@ _G.pairs = function(t)
 	for k, v in opairs(t) do
 		table_insert(st, {k = k, v = v})
 	end
-	table_sort(st, function(a, b) return tostring(a.k) < tostring(b.k) end)
+	table_sort(st, function(a, b)
+		-- Warning! This function is only guaranteed to work if all keys are strings or numbers.
+		-- "number" < "string", so numbers will be sorted before strings.
+		local type1, type2 = type(key1), type(key2)
+		if type1 ~= type2 then
+			return type1 < type2
+		else
+			return key1 < key2
+		end
+	end)
 
 	local idx = 0
 	local function n(t)
