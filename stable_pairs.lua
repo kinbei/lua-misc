@@ -7,10 +7,11 @@ local table_sort = table.sort
 local opairs = _G.pairs
 _G.pairs = function(t)
 	local st = {}
-	for k, v in opairs(t) do
-		table_insert(st, {k = k, v = v})
+	for k in opairs(t) do
+		table_insert(st, k)
 	end
-	table_sort(st, function(a, b)
+
+	table_sort(st, function(key1, key2)
 		-- Warning! This function is only guaranteed to work if all keys are strings or numbers.
 		-- "number" < "string", so numbers will be sorted before strings.
 		local type1, type2 = type(key1), type(key2)
@@ -25,13 +26,13 @@ _G.pairs = function(t)
 	local function n(t)
 		while idx <= #st do
 			idx = idx + 1
-			local v = st[idx]
-			if not v then
+			local key = st[idx]
+			if not key then
 				return
 			end
 
-			if t[v.k] then
-				return v.k, v.v				
+			if t[key] then
+				return key, t[key]
 			end
 		end
 		return
