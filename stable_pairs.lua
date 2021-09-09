@@ -27,14 +27,11 @@ _G.pairs = function(t)
 		while idx <= #st do
 			idx = idx + 1
 			local key = st[idx]
-			if not key then
-				return
-			end
-
 			if t[key] then
-				return key, t[key]
+				return key, t[key]				
 			end
 		end
+
 		return
 	end
 
