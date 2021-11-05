@@ -1,4 +1,3 @@
-
 -- coord  = {xx, xx, xx, ...}
 -- bounds = {xx, xx, xx, ...}
 local function multi_dimensional_array_index_func(bounds)
@@ -13,7 +12,7 @@ local function multi_dimensional_array_index_func(bounds)
 		local idx = 0
 		for i = #coord, 1, -1 do
 			if i == #coord then
-				idx = idx + (accelerate[i] * (coord[i] - 0))
+				idx = idx + (accelerate[i] * coord[i])
 			else
 				idx = idx + (accelerate[i] * (coord[i] - 1))
 			end
