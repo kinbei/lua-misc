@@ -18,13 +18,16 @@ do
 
 	-- select index
 	do
-		local r = cache:select("type", "type_1")
-		assert( table_length(r) == 2 )
-		assert( r[1].name == "obj_1" )
-		assert( r[2].name == "obj_2" )
+		local c = {}
+		for k, v in cache:select("type", "type_1") do
+			c[k] = v
+		end
+		assert( table_length(c) == 2 )
+		assert( c[1].name == "obj_1" )
+		assert( c[2].name == "obj_2" )
 	end
 
-	-- select key
+	-- key
 	do
 		local obj = assert(cache:key(1))
 		assert( obj.name == "obj_1" )
@@ -34,14 +37,19 @@ do
 	do
 		local obj_3 = assert(cache:key(3))
 		obj_3.type = "type_1"
-		local r = cache:select("type", "type_1")
-		assert( table_length(r) == 3 )
-		assert( r[1].name == "obj_1" )
-		assert( r[2].name == "obj_2" )
-		assert( r[3].name == "obj_3" )
+
+		local c = {}
+		for k, v in cache:select("type", "type_1") do
+			c[k] = v
+		end
+
+		assert( table_length(c) == 3 )
+		assert( c[1].name == "obj_1" )
+		assert( c[2].name == "obj_2" )
+		assert( c[3].name == "obj_3" )
 	end
 
-	-- change key value & select
+	-- change key value
 	do
 		local obj = assert(cache:key(3))
 		obj.id = 4
@@ -61,7 +69,11 @@ do
 
 	cache:remove(1)
 	assert(cache:key(1) == nil)
-	local r = cache:select("type", "type_1")
-	assert( table_length(r) == 1 )
-	assert( r[2].name == "obj_2" )
+
+	local c = {}
+	for k, v in cache:select("type", "type_1") do
+		c[k] = v
+	end
+	assert( table_length(c) == 1 )
+	assert( c[2].name == "obj_2" )
 end
