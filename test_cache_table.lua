@@ -1,58 +1,67 @@
-if not table.pack then
-	function table.pack (...)
-		return {n = select('#',...), ...}
-	end
-end
-
-if not table.unpack then
-	table.unpack = unpack 
-end
-
 local function table_length(t)
 	local length = 0
-	for k, v in pairs(t) do
+	for _ in pairs(t) do
 		length = length + 1
 	end
 	return length
 end
 
-local function get_pairs_result(t)
-	for k, v in pairs(t) do
-		t[k] = v
+local create_cache = require("cache_table")
+
+-------------------------------------------------------------------------------------------------
+do
+	local cache = create_cache("id", "type")
+
+	cache:insert {id = 1, type = "type_1", x = 128, y = 129, name = "obj_1"}
+	cache:insert {id = 2, type = "type_1", x = 128, y = 130, name = "obj_2"}
+	cache:insert {id = 3, type = "type_2", x = 128, y = 131, name = "obj_3"}
+
+	-- select index
+	do
+		local r = cache:select("type", "type_1")
+		assert( table_length(r) == 2 )
+		assert( r[1].name == "obj_1" )
+		assert( r[2].name == "obj_2" )
 	end
-	return t
+
+	-- select key
+	do
+		local obj = assert(cache:key(1))
+		assert( obj.name == "obj_1" )
+	end
+
+	-- change index value & select
+	do
+		local obj_3 = assert(cache:key(3))
+		obj_3.type = "type_1"
+		local r = cache:select("type", "type_1")
+		assert( table_length(r) == 3 )
+		assert( r[1].name == "obj_1" )
+		assert( r[2].name == "obj_2" )
+		assert( r[3].name == "obj_3" )
+	end
+
+	-- change key value & select
+	do
+		local obj = assert(cache:key(3))
+		obj.id = 4
+		obj = assert(cache:key(4))
+		assert(obj.name == "obj_3")
+		assert(cache:key(3) == nil)
+	end
 end
 
-local create = require("cache_table")
-local t = create({}, "player_id", "session_id", "profession")
+-------------------------------------------------------------------------------------------------
+do
+	-- remove
+	local cache = create_cache("id", "type")
+	cache:insert {id = 1, type = "type_1", x = 128, y = 129, name = "obj_1"}
+	cache:insert {id = 2, type = "type_1", x = 128, y = 130, name = "obj_2"}
+	cache:insert {id = 3, type = "type_2", x = 128, y = 131, name = "obj_3"}
 
-t:insert({player_id = 100, session_id = 1, profession = 2})
-t:insert({player_id = 101, session_id = 1, profession = 3})
-t:insert({player_id = 102, session_id = 2, profession = 3})
-
--- query key
-local r = t:query("player_id")
-assert( table_length(r) == 3 )
-assert( r[100].player_id == 100 )
-assert( r[101].player_id == 101 )
-assert( r[102].player_id == 102 )
-
--- query cache "session_id"
-local r = t:query("session_id", 1 )
-assert( table_length(r) == 2 )
-assert( r[100].player_id == 100 )
-assert( r[101].player_id == 101 )
-
--- query cache "profession"
-local r = t:query("profession", 3 )
-assert( table_length(r) == 2 )
-assert( r[101].player_id == 101 )
-assert( r[102].player_id == 102 )
-
-local r = t:query("session_id", 10)
-assert( table_length(r) == 0 )
-
-local r = get_pairs_result(t:pairs_query("session_id", 1))
-assert( table_length(r) == 2 )
-assert( r[100].player_id == 100 )
-assert( r[101].player_id == 101 )
+	cache:remove(1)
+	assert(cache:key(1) == nil)
+	local r = cache:select("type", "type_1")
+	assert( table_length(r) == 1 )
+	assert( r[2].name == "obj_2" )
+end
