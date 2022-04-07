@@ -1,7 +1,7 @@
 local EMPTY_TABLE = {}
 
 local function key(self, key)
-    return self.kv[key]
+	return self.kv[key]
 end
 
 local function select(self, index_field, cache_value)
@@ -24,7 +24,7 @@ local function select(self, index_field, cache_value)
 				self.cache[index_field][cache_value][key] = nil
 			end
 		end
-        r[key] = value
+		r[key] = value
 	end
 
 	return r
@@ -50,7 +50,7 @@ local function insert(self, value)
 	local cache_value
 	for _, index_field in ipairs(self.index_fields) do
 		cache_value = assert(value[index_field])
-        assert(type(cache_value) == "number" or type(cache_value) == "string")
+		assert(type(cache_value) == "number" or type(cache_value) == "string")
 		self.cache[index_field] = self.cache[index_field] or {}
 		self.cache[index_field][cache_value] = self.cache[index_field][cache_value] or {}
 		self.cache[index_field][cache_value][key] = true
@@ -65,11 +65,11 @@ local function create(key_field, ...)
 	local m = {}
 	m.key_field = key_field
 	m.index_fields = {...}
-    m.kv = {}
+	m.kv = {}
 	m.cache = {}
 
 	m.insert = insert
-    m.key = key
+	m.key = key
 	m.select = select
 	m.remove = remove
 	return m
