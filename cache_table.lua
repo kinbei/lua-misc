@@ -13,10 +13,10 @@ local function select(self, index_field, cache_value)
 		return EMPTY_TABLE
 	end
 
-    local value
-    local r = {}
+	local value
+	local r = {}
 	for key in pairs(self.cache[index_field][cache_value]) do
-        value = self.kv[key]
+		value = self.kv[key]
 		if not value then
 			self.cache[index_field][cache_value][key] = nil
 		else
@@ -27,12 +27,12 @@ local function select(self, index_field, cache_value)
 		r[key] = value
 	end
 
-	return r
+	return next, r, nil
 end
 
 local function insert(self, value)
 	local key = value[self.key_field]
-    local mt = {}
+	local mt = {}
 	mt.__index = value
 	mt.__newindex = function(t, k, v)
 		if k == self.key_field then
