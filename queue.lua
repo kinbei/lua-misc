@@ -16,13 +16,23 @@ local function pop(self)
 	end
 end
 
-local function first(self)
+local function head(self)
 	if self.head == self.tail then
 		self.head = 1
 		self.tail = 1
 		return nil
 	else
 		return self[self.head]
+	end
+end
+
+local function tail(self)
+	if self.head == self.tail then
+		self.head = 1
+		self.tail = 1
+		return nil
+	else
+		return self[self.tail]
 	end
 end
 
@@ -39,21 +49,8 @@ local function create()
 	q.push = push
 	q.pop = pop
 	q.size = size
-	q.first = first
+	q.head = head
+	q.tail = tail
 	return q
 end
 return create
-
---[[
-local q = require("queue")()
-
-q:push(1)
-q:push(2)
-q:push(3)
-
-assert(q:size() == 3)
-
-assert(q:pop() == 1)
-assert(q:pop() == 2)
-assert(q:pop() == 3)
---]]
