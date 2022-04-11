@@ -5,12 +5,13 @@ local function key(self, key)
 end
 
 local function select(self, index_field, cache_value)
+	assert(cache_value ~= nil)
 	if not self.cache[index_field] then
-		return EMPTY_TABLE
+		return next, EMPTY_TABLE, nil
 	end
 
 	if not self.cache[index_field][cache_value] then
-		return EMPTY_TABLE
+		return next, EMPTY_TABLE, nil
 	end
 
 	local value
@@ -30,27 +31,20 @@ local function select(self, index_field, cache_value)
 	return next, r, nil
 end
 
-local function insert(self, value)
+local function all(self)
+    return next, self.kv, nil
+end
+
+local function set(self, value)
 	local key = value[self.key_field]
-	local mt = {}
-	mt.__index = value
-	mt.__newindex = function(t, k, v)
-		if k == self.key_field then
-			self.kv[value[k]] = nil
-		end
-		value[k] = v
-		insert(self, value)
-	end
-	mt.__pairs = function(t, k, v)
-		return next, value, nil
-	end
-	self.kv[key] = setmetatable({}, mt)
+	self.kv[key] = value
 
 	--
 	local cache_value
 	for _, index_field in ipairs(self.index_fields) do
-		cache_value = assert(value[index_field])
-		assert(type(cache_value) == "number" or type(cache_value) == "string")
+		assert(value[index_field] ~= nil)
+		cache_value = value[index_field]
+		assert(type(cache_value) == "number" or type(cache_value) == "string" or type(cache_value) == "boolean")
 		self.cache[index_field] = self.cache[index_field] or {}
 		self.cache[index_field][cache_value] = self.cache[index_field][cache_value] or {}
 		self.cache[index_field][cache_value][key] = true
@@ -61,6 +55,10 @@ local function remove(self, key)
 	self.kv[key] = nil
 end
 
+local function empty(self)
+	return not next(self.kv)
+end
+
 local function create(key_field, ...)
 	local m = {}
 	m.key_field = key_field
@@ -68,10 +66,12 @@ local function create(key_field, ...)
 	m.kv = {}
 	m.cache = {}
 
-	m.insert = insert
+	m.set = set
 	m.key = key
+        m.all = all
 	m.select = select
 	m.remove = remove
+	m.empty = empty
 	return m
 end
 return create
