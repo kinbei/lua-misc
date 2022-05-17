@@ -5,9 +5,12 @@ local function diff(a, b)
 
     for k, v in pairs(a) do
         if not support_types[type(a[k])] then
-            error(("un support %s"):format(type(a[k])))
+            error(("unsupport %s"):format(type(a[k])))
         elseif type(a[k]) == "table" and type(b[k]) == "table" then
-            r.sub[k] = diff(a[k], b[k])
+            local d = diff(a[k], b[k])
+            if next(d) then
+                r.sub[k] = d
+            end
         elseif b[k] == nil then
             r.del[#r.del+1] = k
         elseif b[k] ~= v then
@@ -23,20 +26,32 @@ local function diff(a, b)
         end
     end
 
+    for k, v in pairs(r) do
+        if not next(v) then
+            r[k] = nil
+        end
+    end
+
     return r
 end
 
 local function patch(a, diff)
-    for k, v in pairs(diff.sub) do
-        a[k] = patch(a[k], v)
+    if diff.sub then
+        for k, v in pairs(diff.sub) do
+            a[k] = patch(a[k], v)
+        end
     end
 
-    for _, v in pairs(diff.del) do
-        a[v] = nil
+    if diff.del then
+        for _, v in pairs(diff.del) do
+            a[v] = nil
+        end
     end
 
-    for k, v in pairs(diff.mod) do
-        a[k] = v
+    if diff.mod then
+        for k, v in pairs(diff.mod) do
+            a[k] = v
+        end
     end
 
     return a

@@ -46,7 +46,6 @@ do
         mod = {
           a = 11
         },
-        sub = {}
     }))
 
     t1 = table_patch(t1, diff)
@@ -82,7 +81,6 @@ do
             mod = {
               a = 11
             },
-            sub = {}
           }
         }
     }))
