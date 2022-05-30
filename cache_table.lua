@@ -3,7 +3,11 @@ local support_types = {["string"] = true, ["number"] = true, ["boolean"] = true}
 
 local function _sync_cache(self, obj, field_name)
 	local key = assert(obj[self.key_field_name])
-	local value = assert(obj[field_name])
+	local value = obj[field_name]
+	if value == nil then
+		return
+	end
+
 	assert(support_types[type(value)])
 	self.cache[field_name] = self.cache[field_name] or {}
 	self.cache[field_name][value] = self.cache[field_name][value] or {}

@@ -68,3 +68,24 @@ do
 	assert( table_length(c) == 1 )
 	assert( c[2].name == "obj_2" )
 end
+
+-------------------------------------------------------------------------------------------------
+do
+	-- empty values
+	local cache = create_cache("id", "type", "tag")
+	cache:add {id = 1, type = "type_1", x = 128, y = 129, name = "obj_1"}
+	cache:add {id = 2, type = "type_1", x = 128, y = 130, name = "obj_2"}
+	cache:add {id = 3, type = "type_2", x = 128, y = 131, name = "obj_3"}
+
+	local obj_3 = assert(cache:selectkey(3))
+	obj_3.tag = false
+	cache:sync(obj_3, "tag")
+
+	local c = {}
+	for k, v in cache:select("tag", false) do
+		c[k] = v
+	end
+
+	assert( table_length(c) == 1 )
+	assert( c[3].name == "obj_3" )
+end
