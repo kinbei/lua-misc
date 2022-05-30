@@ -6,7 +6,7 @@ local function table_length(t)
 	return length
 end
 
-local create_cache = require("cache_table")
+local create_cache = require "cache"
 
 do
 	local cache = create_cache("id", "type")
