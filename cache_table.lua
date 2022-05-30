@@ -11,9 +11,9 @@ local function _sync_cache(self, obj, field_name)
 end
 
 local function add(self, obj)
-	assert(self.objs[self.key_field_name] == nil, ("duplicate key `%s`"):format(key))
-	local k = assert(obj[self.key_field_name])
-	self.objs[k] = obj
+	local key = assert(obj[self.key_field_name])
+	assert(self.objs[key] == nil, ("duplicate key `%s`"):format(key))
+	self.objs[key] = obj
 
 	for field_name in pairs(self.index_field_names) do
 		_sync_cache(self, obj, field_name)
