@@ -11,9 +11,9 @@ local create_cache = require("cache_table")
 do
 	local cache = create_cache("id", "type")
 
-	cache:create {id = 1, type = "type_1", x = 128, y = 129, name = "obj_1"}
-	cache:create {id = 2, type = "type_1", x = 128, y = 130, name = "obj_2"}
-	cache:create {id = 3, type = "type_2", x = 128, y = 131, name = "obj_3"}
+	cache:add {id = 1, type = "type_1", x = 128, y = 129, name = "obj_1"}
+	cache:add {id = 2, type = "type_1", x = 128, y = 130, name = "obj_2"}
+	cache:add {id = 3, type = "type_2", x = 128, y = 131, name = "obj_3"}
 
 	-- select index
 	do
@@ -54,9 +54,9 @@ end
 do
 	-- remove
 	local cache = create_cache("id", "type")
-	cache:create {id = 1, type = "type_1", x = 128, y = 129, name = "obj_1"}
-	cache:create {id = 2, type = "type_1", x = 128, y = 130, name = "obj_2"}
-	cache:create {id = 3, type = "type_2", x = 128, y = 131, name = "obj_3"}
+	cache:add {id = 1, type = "type_1", x = 128, y = 129, name = "obj_1"}
+	cache:add {id = 2, type = "type_1", x = 128, y = 130, name = "obj_2"}
+	cache:add {id = 3, type = "type_2", x = 128, y = 131, name = "obj_3"}
 
 	cache:remove(1)
 	assert(cache:selectkey(1) == nil)
