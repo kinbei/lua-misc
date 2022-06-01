@@ -14,9 +14,9 @@ local function _sync_cache(self, obj, field_name)
 	self.cache[field_name][value][key] = true
 end
 
-local function add(self, obj)
+local function set(self, obj)
 	local key = assert(obj[self.key_field_name])
-	assert(self.objs[key] == nil, ("duplicate key `%s`"):format(key))
+	-- assert(self.objs[key] == nil, ("duplicate key `%s`"):format(key))
 	self.objs[key] = obj
 
 	for field_name in pairs(self.index_field_names) do
@@ -87,6 +87,11 @@ local function empty(self)
 	return not next(self.objs)
 end
 
+local function clear(self)
+	self.objs = {}
+	self.cache = {}
+end
+
 return function(key_field_name, ...)
 	local m = {}
 	m.key_field_name = key_field_name
@@ -97,12 +102,13 @@ return function(key_field_name, ...)
 	m.objs = {}
 	m.cache = {}
 
-	m.add = add
+	m.set = set
 	m.remove = remove
 	m.sync = sync
 	m.select = select
 	m.selectkey = selectkey
 	m.selectall = selectall
 	m.empty = empty
+	m.clear = clear
 	return m
 end
