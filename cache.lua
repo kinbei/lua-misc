@@ -1,7 +1,7 @@
 local EMPTY_TABLE = {}
 local support_types = {["string"] = true, ["number"] = true, ["boolean"] = true}
 
-local function _sync_cache(self, obj, field_name)
+local function sync_cache(self, obj, field_name)
 	local key = assert(obj[self.key_field_name])
 	local value = obj[field_name]
 	if value == nil then
@@ -14,38 +14,53 @@ local function _sync_cache(self, obj, field_name)
 	self.cache[field_name][value][key] = true
 end
 
-local function set(self, obj)
+local cache = {}
+
+function cache:new(key_field_name, ...)
+	local c = {}
+	c.key_field_name = key_field_name
+	c.index_field_names = {}
+	for _, field_name in ipairs({...}) do
+		c.index_field_names[field_name] = true
+	end
+	c.objs = {}
+	c.cache = {}
+
+	setmetatable(c, self)
+    self.__index = self
+    return c
+end
+
+function cache:add(obj)
 	local key = assert(obj[self.key_field_name])
-	-- assert(self.objs[key] == nil, ("duplicate key `%s`"):format(key))
+	assert(self.objs[key] == nil, ("duplicate key `%s`"):format(key))
 	self.objs[key] = obj
 
 	for field_name in pairs(self.index_field_names) do
-		_sync_cache(self, obj, field_name)
+		sync_cache(self, obj, field_name)
 	end
 end
 
-local function remove(self, key)
+function cache:remove(key)
 	assert(self.objs[key])
 	self.objs[key] = nil
 end
 
-local function sync(self, syncobj, ...)
-	local key = assert(syncobj[self.key_field_name])
-	local obj = assert(self.objs[key], ("duplicate key `%s`"):format(key))
+function cache:sync(obj, ...)
+	local key = assert(obj[self.key_field_name])
+	assert(self.objs[key] == obj, ("can not found key `%s`"):format(key))
 
 	local field_names = {...}
 	assert(#field_names >= 1)
 	for _, field_name in ipairs(field_names) do
 		assert(type(field_name) == "string")
-		obj[field_name] = syncobj[field_name]
-
 		if self.index_field_names[field_name] then
-			_sync_cache(self, obj, field_name)
+			sync_cache(self, obj, field_name)
 		end
 	end
 end
 
-local function select(self, field_name, value)
+function cache:select(field_name, value)
 	assert(value ~= nil)
 	assert(self.index_field_names[field_name], ("must specify the field_name `%s` as index field name"):format(field_name))
 
@@ -58,7 +73,7 @@ local function select(self, field_name, value)
 	end
 
 	local obj
-	local result = {}
+	local t = {}
 	for key in pairs(self.cache[field_name][value]) do
 		obj = self.objs[key]
 		if not obj then
@@ -67,48 +82,33 @@ local function select(self, field_name, value)
 			if obj[field_name] ~= value then
 				self.cache[field_name][value][key] = nil
 			else
-				result[key] = obj
+				t[key] = obj
 			end
 		end
 	end
 
-	return next, result, nil
+	return next, t, nil
 end
 
-local function selectkey(self, key)
+function cache:selectkey(key)
 	return self.objs[key]
 end
 
-local function selectall(self)
+function cache:selectall()
     return next, self.objs, nil
 end
 
-local function empty(self)
+function cache:empty()
 	return not next(self.objs)
 end
 
-local function clear(self)
+function cache:clear(field_name)
+	self.cache[field_name] = nil
+end
+
+function cache:clearall()
 	self.objs = {}
 	self.cache = {}
 end
 
-return function(key_field_name, ...)
-	local m = {}
-	m.key_field_name = key_field_name
-	m.index_field_names = {}
-	for _, field_name in ipairs({...}) do
-		m.index_field_names[field_name] = true
-	end
-	m.objs = {}
-	m.cache = {}
-
-	m.set = set
-	m.remove = remove
-	m.sync = sync
-	m.select = select
-	m.selectkey = selectkey
-	m.selectall = selectall
-	m.empty = empty
-	m.clear = clear
-	return m
-end
+return cache

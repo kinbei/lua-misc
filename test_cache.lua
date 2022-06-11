@@ -6,10 +6,10 @@ local function table_length(t)
 	return length
 end
 
-local create_cache = require "cache"
+local CACHE = require "cache"
 
 do
-	local cache = create_cache("id", "type")
+	local cache = CACHE:new("id", "type")
 
 	cache:add {id = 1, type = "type_1", x = 128, y = 129, name = "obj_1"}
 	cache:add {id = 2, type = "type_1", x = 128, y = 130, name = "obj_2"}
@@ -53,7 +53,7 @@ end
 -------------------------------------------------------------------------------------------------
 do
 	-- remove
-	local cache = create_cache("id", "type")
+	local cache = CACHE:new("id", "type")
 	cache:add {id = 1, type = "type_1", x = 128, y = 129, name = "obj_1"}
 	cache:add {id = 2, type = "type_1", x = 128, y = 130, name = "obj_2"}
 	cache:add {id = 3, type = "type_2", x = 128, y = 131, name = "obj_3"}
@@ -72,7 +72,7 @@ end
 -------------------------------------------------------------------------------------------------
 do
 	-- empty values
-	local cache = create_cache("id", "type", "tag")
+	local cache = CACHE:new("id", "type", "tag")
 	cache:add {id = 1, type = "type_1", x = 128, y = 129, name = "obj_1"}
 	cache:add {id = 2, type = "type_1", x = 128, y = 130, name = "obj_2"}
 	cache:add {id = 3, type = "type_2", x = 128, y = 131, name = "obj_3"}
