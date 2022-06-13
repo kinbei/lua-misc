@@ -2,6 +2,7 @@ local cache = require "cache"
 local multiple_cache = {}
 
 function multiple_cache:new(cache_names, key_field_name, ...)
+    assert(#cache_names >= 2)
     local c = {}
     c.caches = {}
     for _, field_name in ipairs({key_field_name, ...}) do
@@ -32,11 +33,27 @@ end
 function multiple_cache:remove(key)
     assert(self:selectkey(key))
 
+    local function get_cache_names(cache_names)
+        local t = {}
+        for i = 1, #cache_names - 1 do
+            t[#t+1] = cache_names[i]
+        end
+        return t
+    end
+
     local cache_name = self.cache_names[#self.cache_names]
     local cache = self.caches[cache_name]
-    local obj = cache:selectkey(key)
+    local obj = cache:selectkey(key, get_cache_names(self.cache_names))
     if obj then
-        cache:remove(key)
+        if not self:selectkey(key) then
+            cache:remove(key)
+        else
+            cache:remove(key)
+            cache:add({
+                [self.key_field_name] = key,
+                REMOVED = true,
+            })
+        end
     else
         cache:add({
             [self.key_field_name] = key,
@@ -45,9 +62,10 @@ function multiple_cache:remove(key)
     end
 end
 
-function multiple_cache:select(field_name, value)
+function multiple_cache:select(field_name, value, cache_names)
+    cache_names = cache_names or self.cache_names
     local t = {}
-    for _, cache_name in ipairs(self.cache_names) do
+    for _, cache_name in ipairs(cache_names) do
         for key, obj in self.caches[cache_name]:select(field_name, value) do
             t[key] = obj
         end
@@ -64,8 +82,10 @@ function multiple_cache:select(field_name, value)
     return next, t, nil
 end
 
-function multiple_cache:selectkey(key)
-    for i = #self.cache_names, 1, -1 do
+function multiple_cache:selectkey(key, cache_names)
+    assert(#cache_names > 0)
+    cache_names = cache_names or self.cache_names
+    for i = #cache_names, 1, -1 do
         local obj = self.caches[self.cache_names[i]]:selectkey(key)
         if obj then
             if not obj.REMOVED then
