@@ -133,6 +133,25 @@ function multiple_cache:commit(cache_name_1, cache_name_2)
     cache_1:clearall()
 end
 
+function multiple_cache:patch(cache_name_1, cache_name_2)
+    local t = {add = {}, del = {}, mod = {}}
+    local cache_1 = assert(self.caches[cache_name_1])
+    local cache_2 = assert(self.caches[cache_name_2])
+    for _, obj in cache_1:selectall() do
+        local key = obj[self.key_field_name]
+        if cache_2:selectkey(key) then
+            if obj.REMOVED then
+                t.del[#t.del + 1] = obj
+            else
+                t.mod[#t.mod + 1] = obj
+            end
+        else
+            assert(obj.REMOVED == nil)
+            t.add[#t.add + 1] = obj
+        end
+    end
+end
+
 function multiple_cache:cleanup()
     for _, cache_name in ipairs(self.cache_names) do
         local cache = self.caches[cache_name]
